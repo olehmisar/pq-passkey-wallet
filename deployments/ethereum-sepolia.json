@@ -1,0 +1,8 @@
+{
+  "chainId": 11155111,
+  "entryPoint": "0x433709009B8330FDa32311DF1C2AFA402eD8D009",
+  "verifier": "0x4defe4c0014fb36c49d42e70e62af2f6c7470b06",
+  "factory": "0xee0181e17688d191a9e592589eef4d818b0f5874",
+  "rpcUrl": "https://ethereum-sepolia-rpc.publicnode.com",
+  "deployer": "0x6Ce07B9ec33Aa52Db741d14AA5c6872E03f08f36"
+}

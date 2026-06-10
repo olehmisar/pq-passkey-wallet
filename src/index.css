@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", system-ui, sans-serif;
+  --color-ios-bg: #f2f2f7;
+  --color-ios-card: #ffffff;
+  --color-ios-label: #000000;
+  --color-ios-secondary: #8e8e93;
+  --color-ios-tint: #007aff;
+  --color-ios-separator: #c6c6c8;
+  --color-ios-red: #ff3b30;
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply min-h-dvh bg-(--color-ios-bg) font-sans text-(--color-ios-label) antialiased;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom)
+      env(safe-area-inset-left);
+  }
+}

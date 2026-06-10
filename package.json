@@ -1,0 +1,43 @@
+{
+  "name": "pq-passkey-wallet",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "imports": {
+    "#sdk": "./sdk/index.ts",
+    "#sdk/*": "./sdk/*"
+  },
+  "scripts": {
+    "dev": "vp run app:dev",
+    "build": "vp run app:build",
+    "preview": "vp preview",
+    "check": "vp run forge:build && vp check",
+    "lint": "vp lint .",
+    "fmt": "vp fmt",
+    "test": "vp run forge:build && vp run forge:test && vp test",
+    "prepare": "vp config"
+  },
+  "dependencies": {
+    "@noble/hashes": "^2.2.0",
+    "@noble/post-quantum": "^0.6.1",
+    "ox": "^0.14.29",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "viem": "^2.31.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.8",
+    "@types/node": "^24.12.3",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "globals": "^17.6.0",
+    "nitro": "3.0.260603-beta",
+    "prool": "^0.2.4",
+    "tailwindcss": "^4.1.8",
+    "typescript": "~6.0.2",
+    "vite": "npm:@voidzero-dev/vite-plus-core@latest",
+    "vite-plus": "^0.1.24"
+  },
+  "packageManager": "pnpm@11.5.2"
+}

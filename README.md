@@ -2,6 +2,10 @@
 
 **Passkey-custodied ML-DSA-44 ERC-4337 smart wallet on Ethereum Sepolia** — FIPS-204 signatures in the browser, validated on-chain via an existing ZKNox verifier, with no PQ key material on the server.
 
+> # ⚠️ DISCLAIMER
+>
+> **This codebase is mostly vibe-coded. It is an educational project.**
+
 ## Demo
 
 **https://pq-wallet.vercel.app** (Sepolia testnet)

@@ -3,6 +3,7 @@ import type { Address, Hex } from "viem";
 import { formatEther, isAddress, parseEther } from "viem";
 import { LargeBlobNotSupportedError, WalletNotFoundError, sdk } from "#sdk";
 import type { WalletRecord } from "#sdk";
+import { AppFooter } from "./components/AppFooter";
 import { GroupedList } from "./components/GroupedList";
 import { IOSButton } from "./components/IOSButton";
 import { LargeTitleNav } from "./components/LargeTitleNav";
@@ -191,7 +192,7 @@ export default function App() {
 
   if (session && sendOpen) {
     return (
-      <div className="mx-auto max-w-md">
+      <div className="mx-auto flex min-h-dvh max-w-md flex-col">
         <SendScreen
           balanceLabel={balance !== null ? `${formatEther(balance)} ETH` : "…"}
           recipient={recipient}
@@ -204,6 +205,7 @@ export default function App() {
           onCancel={closeSend}
           onSubmit={onSend}
         />
+        <AppFooter />
       </div>
     );
   }
@@ -256,6 +258,7 @@ export default function App() {
             </p>
           ) : null}
         </main>
+        <AppFooter />
       </div>
     );
   }
@@ -309,6 +312,7 @@ export default function App() {
           </p>
         ) : null}
       </main>
+      <AppFooter />
     </div>
   );
 }

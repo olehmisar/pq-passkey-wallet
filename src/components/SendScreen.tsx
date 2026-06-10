@@ -27,7 +27,7 @@ export function SendScreen({
   onSubmit,
 }: Props) {
   return (
-    <div className="flex min-h-dvh flex-col">
+    <div className="flex flex-1 flex-col">
       <header className="sticky top-0 z-10 flex items-center border-b border-(--color-ios-separator)/40 bg-(--color-ios-bg)/80 px-4 py-3 backdrop-blur-xl">
         <button
           type="button"

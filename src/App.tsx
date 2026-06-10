@@ -1,7 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
 import type { Address, Hex } from "viem";
 import { formatEther, isAddress, parseEther } from "viem";
-import { LargeBlobNotSupportedError, WalletNotFoundError, sdk } from "#sdk";
+import {
+  createWalletStageLabel,
+  LargeBlobNotSupportedError,
+  WalletNotFoundError,
+  sdk,
+  type CreateWalletStage,
+} from "#sdk";
 import type { WalletRecord } from "#sdk";
 import { AppFooter } from "./components/AppFooter";
 import { GroupedList } from "./components/GroupedList";
@@ -33,6 +39,7 @@ export default function App() {
   const [error, setError] = useState<string | null>(null);
   const [sendNotice, setSendNotice] = useState<string | null>(null);
   const [addressCopied, setAddressCopied] = useState(false);
+  const [createStage, setCreateStage] = useState<CreateWalletStage | null>(null);
 
   const refreshBalance = useCallback(async (record: WalletRecord) => {
     try {
@@ -58,14 +65,18 @@ export default function App() {
   async function onCreate() {
     setBusy(true);
     setError(null);
+    setCreateStage(null);
     try {
       const name = displayName.trim() || "My PQ Wallet";
-      const record = await sdk.wallet.createWallet(name);
+      const record = await sdk.wallet.createWallet(name, {
+        onProgress: (stage) => setCreateStage(stage),
+      });
       setSession({ record, displayName: name });
     } catch (e) {
       setError(formatError(e));
     } finally {
       setBusy(false);
+      setCreateStage(null);
     }
   }
 
@@ -235,7 +246,8 @@ export default function App() {
           />
           <div className="flex flex-col gap-3">
             <IOSButton
-              label={busy ? "Creating…" : "Create Wallet"}
+              label={createStage ? "Creating Wallet…" : busy ? "Creating…" : "Create Wallet"}
+              detail={createStage ? createWalletStageLabel(createStage) : undefined}
               onClick={onCreate}
               disabled={busy}
             />

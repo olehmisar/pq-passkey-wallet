@@ -10,6 +10,8 @@ import { PasskeyPqWalletService } from "./services/wallet/PasskeyPqWalletService
 
 export { LargeBlobNotSupportedError, WalletNotFoundError };
 export type { WalletRecord } from "./services/wallet/PasskeyPqWalletService";
+export type { CreateWalletStage } from "./services/wallet/createWalletProgress";
+export { createWalletStageLabel } from "./services/wallet/createWalletProgress";
 export type { PqKeyServiceLike };
 
 export type SdkConfig = {

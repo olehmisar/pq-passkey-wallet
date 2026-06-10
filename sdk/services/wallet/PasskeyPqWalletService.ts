@@ -22,6 +22,7 @@ import { rpIdOrDefault } from "../webauthn/helpers";
 import { WalletSessionService } from "./WalletSessionService";
 import { deserializePasskeyWalletBlob, serializePasskeyWalletBlob } from "./walletBlobCodec";
 import { apiRoute } from "../apiRoutes";
+import type { CreateWalletOptions } from "./createWalletProgress";
 import { createWalletUserId, userIdToBytes } from "./walletUserId";
 
 /** Serialized PQ wallet payload stored in passkey largeBlob. */
@@ -81,15 +82,21 @@ export class PasskeyPqWalletService {
     this.session.clear();
   }
 
-  async createWallet(displayName: string): Promise<WalletRecord> {
+  async createWallet(displayName: string, options?: CreateWalletOptions): Promise<WalletRecord> {
+    const report = options?.onProgress;
+
     const userId = createWalletUserId();
+    report?.("passkey");
     const credential = await this.deps.passkey.create({
       displayName,
       rpId: rpIdOrDefault(),
       userId: userIdToBytes(userId),
     });
+
+    report?.("pq-keys");
     const pq = await this.deps.pqKey.generateKeyPair();
 
+    report?.("register-key");
     const pkPointer = await this.deps.aa.registerPublicKey(pq.publicKeyHex);
     const accountAddress = this.deps.aaConfig.pqAccountFactoryAddress
       ? await this.deps.aa.getCounterfactualAddress(pkPointer)
@@ -106,6 +113,7 @@ export class PasskeyPqWalletService {
       createdAt: new Date().toISOString(),
     };
 
+    report?.("save-blob");
     await this.deps.largeBlob.write({
       credentialId: credential.id,
       blob: serializePasskeyWalletBlob(blob),
@@ -119,6 +127,7 @@ export class PasskeyPqWalletService {
     this.session.persist(record, displayName);
 
     if (accountAddress) {
+      report?.("fund");
       await this.fundRecommendedTestEth(record);
     }
 

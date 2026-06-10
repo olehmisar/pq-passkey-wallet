@@ -31,6 +31,7 @@ export default function App() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [sendNotice, setSendNotice] = useState<string | null>(null);
+  const [addressCopied, setAddressCopied] = useState(false);
 
   const refreshBalance = useCallback(async (record: WalletRecord) => {
     try {
@@ -101,6 +102,18 @@ export default function App() {
   function returnToWallet() {
     setSendOpen(false);
     setError(null);
+  }
+
+  async function copyAccountAddress() {
+    const address = session?.record.blob.accountAddress;
+    if (!address) return;
+    try {
+      await navigator.clipboard.writeText(address);
+      setAddressCopied(true);
+      window.setTimeout(() => setAddressCopied(false), 2000);
+    } catch {
+      setError("Could not copy address.");
+    }
   }
 
   function openSend() {
@@ -255,6 +268,9 @@ export default function App() {
         <WalletPassCard
           title={session.displayName}
           subtitle={shortAddress(accountAddress)}
+          copyValue={accountAddress}
+          copied={addressCopied}
+          onCopy={() => void copyAccountAddress()}
           accent="emerald"
           primaryValue={balance !== null ? `${formatEther(balance)} ETH` : "…"}
           primaryLabel="BALANCE"

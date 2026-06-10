@@ -1,3 +1,5 @@
+import { Check, Copy } from "@phosphor-icons/react";
+
 type Accent = "emerald" | "slate" | "blue";
 
 const accentMap: Record<Accent, string> = {
@@ -43,9 +45,11 @@ export function WalletPassCard({
             aria-label="Copy wallet address"
           >
             <span className="font-mono">{subtitle}</span>
-            <span className="text-[13px] font-medium text-white/90">
-              {copied ? "Copied" : "Copy"}
-            </span>
+            {copied ? (
+              <Check size={18} weight="bold" aria-hidden className="text-white" />
+            ) : (
+              <Copy size={18} weight="bold" aria-hidden className="text-white/90" />
+            )}
           </button>
         ) : (
           <p className="mt-1 font-mono text-[15px] text-white/80">{subtitle}</p>

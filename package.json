@@ -20,6 +20,7 @@
   "dependencies": {
     "@noble/hashes": "^2.2.0",
     "@noble/post-quantum": "^0.6.1",
+    "@phosphor-icons/react": "^2.1.10",
     "ox": "^0.14.29",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
